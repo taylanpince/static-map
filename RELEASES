@@ -1,0 +1,13 @@
+RELEASE 1.0ALPHA
+================
+
+Tagged release-1.0ALPHA on March 11, 2009 by Taylan Pince <tpince@trapeze.com>.
+
+
+New Features
+------------
+
+* Added StaticMap class that provides a wrapper around Google's Static and
+Dynamic Map applications in a single interface
+
+* * *

@@ -1,0 +1,41 @@
+/* @group Static Map */
+
+.static-map {
+    position: relative;
+    width: 298px;
+    height: 298px;
+    border: 1px solid #333;
+}
+
+.static-map img {
+    border: none !important;
+}
+
+.static-map .map-link {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: 1px solid #000;
+    background-color: #FFF;
+    padding: 3px;
+    font-size: 10px;
+    color: #000;
+    cursor: pointer;
+}
+
+.static-map a:hover {
+    text-decoration: none;
+}
+
+.static-map .map-loader {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 134px 0px 0px 134px;
+    width: 164px;
+    height: 164px;
+    background-color: #FFF;
+    opacity: 0.8;
+}
+
+/* @end */

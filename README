@@ -1,0 +1,75 @@
+Static Map
+==========
+
+This application provides a wrapper around Google static and dynamic map APIs
+in a single interface. Given a list of coordinates, it builds the URL for
+loading a map image from Google Static Maps. When clicked on the map image,
+it loads the dynamic version of the same map, with the markers intact.
+
+
+Installation
+------------
+
+From your media folder, create a symlink to the dist directory under the
+static_map path:
+
+    ln -s ../lib/static_map media/static_map
+
+Make sure CSS and JS files are loaded on the templates where you will use 
+Static Map:
+
+    <style type="text/css">
+        @import "{{ MEDIA_PATH }}static_map/css/static_map.css";
+    </style>
+    
+    <script type="text/javascript" src="{{ MEDIA_PATH }}static_map/js/
+        static_map{% if not DEBUG %}.min{% endif %}.js"></script>
+
+
+Usage
+-----
+
+StaticMap class takes a selector and a dictionary of options:
+
+    - api_key: Google API key, required for both static and dynamic maps
+    
+    - size: Dimensions of the map as an array
+    
+    - center: Central coordinates of the map, as an array
+    
+    - zoom: Zoom level of the map
+    
+    - markers: An array of markers, each identified as a dictionary:
+    
+        - coordinates: Coordinates of the marker, as an array
+        
+        - title: A title for the marker, will only show up on a dynamic map
+        
+        - description: A description for the marker
+
+After creating the container for the map, instantiate the class with options:
+
+    <div id="MapArea"></div>
+    
+    <script type="text/javascript">
+    //<![CDATA[
+        new trapeze.StaticMap("#MapArea", {
+            "api_key" : "ABQIAAAAKL2QGMUTnJKPoQ364UME6xTm8JqRnn5jo4DKd3vF2", 
+            "size" : [298, 298], 
+            "center" : [41.9288, -87.6315], 
+            "zoom" : 10,
+            "markers" : [
+                {
+                    "coordinates" : [41.9228, -87.6632],
+                    "title" : "Title 1",
+                    "description" : "Description 2"
+                },
+                {
+                    "coordinates" : [41.9228, -87.6632],
+                    "title" : "Title 2",
+                    "description" : "Description 2"
+                }
+            ]
+        });
+    //]]>
+    </script>
