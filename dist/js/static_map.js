@@ -67,7 +67,7 @@ trapeze.StaticMap = $.Class.extend({
     },
     
     draw_interactive_map : function() {
-        var gmap = new google.maps.Map2(document.getElementById("map_div"));
+        var gmap = new google.maps.Map2($(this.selector).get(0));
         var gcenter = new google.maps.LatLng(this.center[0], this.center[1]);
         var gbounds = new google.maps.LatLngBounds();
         
@@ -75,7 +75,7 @@ trapeze.StaticMap = $.Class.extend({
         gmap.setCenter(gcenter);
         gmap.addControl(new google.maps.SmallMapControl());
         
-        for (var m in this.markers) {
+        for (var m = 0; m < this.markers.length; m++) {
             var gpoint = new google.maps.LatLng(this.markers[m].coordinates[0], this.markers[m].coordinates[1]);
             var gmarker = new google.maps.Marker(gpoint, {
                 "icon" : new google.maps.Icon(google.maps.DEFAULT_ICON, trapeze.render_template(this.marker_template, {
@@ -119,7 +119,7 @@ trapeze.StaticMap = $.Class.extend({
             this.load_interactive_map();
         } else {
             $.getScript(trapeze.render_template(this.api_template, {
-                "api_key": this.params["api_key"]
+                "api_key": this.api_key
             }), this.load_interactive_map.bind(this));
         }
         
@@ -138,6 +138,8 @@ trapeze.StaticMap = $.Class.extend({
     
     init : function(selector, options) {
         this.selector = selector;
+        
+        $(this.selector).addClass("static-map");
         
         if (options) {
             this.size = (options.size) ? options.size : this.size;

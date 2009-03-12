@@ -7,6 +7,15 @@ loading a map image from Google Static Maps. When clicked on the map image,
 it loads the dynamic version of the same map, with the markers intact.
 
 
+Dependencies
+------------
+
+StaticMap requires the Trapeze jQuery distribution and the Trapeze core JS
+class. A Google Maps API key is also needed for it to run properly. All Google
+JavaScript libraries are loaded dynamically so they don't need to be called
+separately.
+
+
 Installation
 ------------
 
@@ -54,7 +63,7 @@ After creating the container for the map, instantiate the class with options:
     <script type="text/javascript">
     //<![CDATA[
         new trapeze.StaticMap("#MapArea", {
-            "api_key" : "ABQIAAAAKL2QGMUTnJKPoQ364UME6xTm8JqRnn5jo4DKd3vF2", 
+            "api_key" : "<GOOGLE_MAPS_API_KEY>", 
             "size" : [298, 298], 
             "center" : [41.9288, -87.6315], 
             "zoom" : 10,
