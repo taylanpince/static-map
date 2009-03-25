@@ -3,27 +3,40 @@
 *	A JS class for rendering static Google Maps and loading dynamic maps on the fly
 *	
 *	Requires jQuery library (http://www.jquery.com),
-*   jQuery.Class plug-in (http://www.taylanpince.com/blog/posts/jquery-class-plug-in)
+*   jQuery.Class plug-in (http://github.com/taylanpince/jquery-class)
 *	
-*	Taylan Pince (tpince at trapeze dot com) - October 24, 2008
+*	Taylan Pince (taylanpince at gmail dot com) - October 24, 2008
 */
 
-$.namespace("trapeze.StaticMap");
+$.namespace("core.StaticMap");
 
-trapeze.StaticMap = $.Class.extend({
+core.StaticMap = $.Class.extend({
     
     url_template : "http://maps.google.com/staticmap?key=%(api_key)&amp;center=%(center)&amp;markers=%(markers)&amp;size=%(size)&amp;format=png8",
     api_template : "http://www.google.com/jsapi?key=%(api_key)",
     marker_template : "%(media_path)static_map/images/markers/%(number).png",
-    image_template : '<a href="javascript:void(0);" title="Launch Interactive Map"><img src="%(map_url)" alt="Static Map" /><span class="map-link">Launch Interactive Map</span></a>',
+    image_template : '<a href="javascript:void(0);" title="%(launch_copy)"><img src="%(map_url)" alt="Static Map" /><span class="map-link">%(launch_copy)</span></a>',
     loader_template : '<div class="map-loader"><img src="%(media_path)static_map/images/loader.gif" alt="Map Loader" /></div>',
     info_template : '<h3>%(title)</h3>%(description)',
+    
+    launch_copy : "Launch Interactive Map",
     
     selector : "",
     size : [300, 300],
     center : [0, 0],
     zoom : 14,
     markers : [],
+    media_path : "",
+    
+    render_template : function(template, values) {
+        for (val in values) {
+            var re = new RegExp("%\\(" + val + "\\)", "g");
+            
+            template = template.replace(re, values[val]);
+        }
+        
+        return template;
+    },
     
     clean_variable : function(val, delimiter) {
         if (val.charAt(val.length - 1) == delimiter) {
@@ -48,7 +61,7 @@ trapeze.StaticMap = $.Class.extend({
             }
         }
         
-        var url = trapeze.render_template(this.url_template, {
+        var url = this.render_template(this.url_template, {
             "api_key" : this.api_key,
             "size" : this.size[0] + "x" + this.size[1],
             "center" : center,
@@ -61,8 +74,9 @@ trapeze.StaticMap = $.Class.extend({
     },
     
     draw_static_map : function() {
-        $(this.selector).html(trapeze.render_template(this.image_template, {
-            "map_url" : this.build_url()
+        $(this.selector).html(this.render_template(this.image_template, {
+            "map_url" : this.build_url(),
+            "launch_copy" : this.launch_copy
         })).find("a").click(this.launch_interactive_map.bind(this));
     },
     
@@ -78,14 +92,14 @@ trapeze.StaticMap = $.Class.extend({
         for (var m = 0; m < this.markers.length; m++) {
             var gpoint = new google.maps.LatLng(this.markers[m].coordinates[0], this.markers[m].coordinates[1]);
             var gmarker = new google.maps.Marker(gpoint, {
-                "icon" : new google.maps.Icon(google.maps.DEFAULT_ICON, trapeze.render_template(this.marker_template, {
-                    "media_path": trapeze.media_path,
+                "icon" : new google.maps.Icon(google.maps.DEFAULT_ICON, this.render_template(this.marker_template, {
+                    "media_path": this.media_path,
                     "number": ((this.markers.length == 1 && gcenter.equals(gpoint)) ? "dot" : (parseInt(m) + 1))
                 }))
             });
             
             if (typeof this.markers[m].title || typeof this.markers[m].description) {
-                gmarker.bindInfoWindowHtml(trapeze.render_template(this.info_template, {
+                gmarker.bindInfoWindowHtml(this.render_template(this.info_template, {
                     "title" : this.markers[m].title,
                     "description" : this.markers[m].description
                 }), {
@@ -118,7 +132,7 @@ trapeze.StaticMap = $.Class.extend({
         if (typeof google == "object") {
             this.load_interactive_map();
         } else {
-            $.getScript(trapeze.render_template(this.api_template, {
+            $.getScript(this.render_template(this.api_template, {
                 "api_key": this.api_key
             }), this.load_interactive_map.bind(this));
         }
@@ -127,8 +141,8 @@ trapeze.StaticMap = $.Class.extend({
     },
     
     show_loader : function() {
-        $(this.selector).append(trapeze.render_template(this.loader_template, {
-            "media_path": trapeze.media_path
+        $(this.selector).append(this.render_template(this.loader_template, {
+            "media_path": this.media_path
         }));
     },
     
@@ -142,10 +156,9 @@ trapeze.StaticMap = $.Class.extend({
         $(this.selector).addClass("static-map");
         
         if (options) {
-            this.size = (options.size) ? options.size : this.size;
-            this.center = (options.center) ? options.center : this.center;
-            this.zoom = (options.zoom) ? options.zoom : this.zoom;
-            this.markers = (options.markers) ? options.markers : this.markers;
+            for (opt in options) {
+                this[opt] = options[opt];
+            }
         }
         
         this.draw_static_map();

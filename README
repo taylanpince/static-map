@@ -10,9 +10,10 @@ it loads the dynamic version of the same map, with the markers intact.
 Dependencies
 ------------
 
-StaticMap requires the Trapeze jQuery distribution and the Trapeze core JS
-class. A Google Maps API key is also needed for it to run properly. All Google
-JavaScript libraries are loaded dynamically so they don't need to be called
+StaticMap requires the jQuery library (any version after 1.2 will do) and
+the jQuery Class plug-in (http://github.com/taylanpince/jquery-class). A 
+Google Maps API key is also needed for it to run properly. All Google
+JavaScript libraries are loaded dynamically so they don't need to be included
 separately.
 
 
@@ -22,16 +23,16 @@ Installation
 From your media folder, create a symlink to the dist directory under the
 static_map path:
 
-    ln -s ../lib/static_map media/static_map
+    ln -s ../lib/static_map/dist media/static_map
 
 Make sure CSS and JS files are loaded on the templates where you will use 
 Static Map:
 
     <style type="text/css">
-        @import "{{ MEDIA_PATH }}static_map/css/static_map.css";
+        @import "{{ MEDIA_URL }}static_map/css/static_map.css";
     </style>
     
-    <script type="text/javascript" src="{{ MEDIA_PATH }}static_map/js/
+    <script type="text/javascript" src="{{ MEDIA_URL }}static_map/js/
         static_map{% if not DEBUG %}.min{% endif %}.js"></script>
 
 
@@ -55,6 +56,8 @@ StaticMap class takes a selector and a dictionary of options:
         - title: A title for the marker, will only show up on a dynamic map
         
         - description: A description for the marker
+
+    - media_url: A string that will be apended to media file paths
 
 After creating the container for the map, instantiate the class with options:
 
