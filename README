@@ -65,7 +65,7 @@ After creating the container for the map, instantiate the class with options:
     
     <script type="text/javascript">
     //<![CDATA[
-        new trapeze.StaticMap("#MapArea", {
+        new core.StaticMap("#MapArea", {
             "api_key" : "<GOOGLE_MAPS_API_KEY>", 
             "size" : [298, 298], 
             "center" : [41.9288, -87.6315], 
@@ -77,7 +77,7 @@ After creating the container for the map, instantiate the class with options:
                     "description" : "Description 2"
                 },
                 {
-                    "coordinates" : [41.9228, -87.6632],
+                    "coordinates" : [42.9228, -88.6632],
                     "title" : "Title 2",
                     "description" : "Description 2"
                 }
