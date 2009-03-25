@@ -11,7 +11,7 @@ Dependencies
 ------------
 
 StaticMap requires the jQuery library (any version after 1.2 will do) and
-the jQuery Class plug-in (http://github.com/taylanpince/jquery-class/). A 
+the jQuery Class plug-in (http://github.com/taylanpince/jquery-class/ ). A 
 Google Maps API key is also needed for it to run properly. All Google
 JavaScript libraries are loaded dynamically so they don't need to be included
 separately.
@@ -66,7 +66,8 @@ After creating the container for the map, instantiate the class with options:
     <script type="text/javascript">
     //<![CDATA[
         new core.StaticMap("#MapArea", {
-            "api_key" : "<GOOGLE_MAPS_API_KEY>", 
+            "media_url" : "{{ MEDIA_URL }}",
+            "api_key" : "{{ GOOGLE_MAPS_API_KEY }}", 
             "size" : [298, 298], 
             "center" : [41.9288, -87.6315], 
             "zoom" : 10,
