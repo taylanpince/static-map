@@ -11,7 +11,7 @@ Dependencies
 ------------
 
 StaticMap requires the jQuery library (any version after 1.2 will do) and
-the jQuery Class plug-in (http://github.com/taylanpince/jquery-class). A 
+the jQuery Class plug-in (http://github.com/taylanpince/jquery-class/). A 
 Google Maps API key is also needed for it to run properly. All Google
 JavaScript libraries are loaded dynamically so they don't need to be included
 separately.
