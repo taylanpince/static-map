@@ -111,7 +111,7 @@ core.StaticMap = $.Class.extend({
             gbounds.extend(gpoint);
         }
         
-        gmap.setZoom(gmap.getBoundsZoomLevel(gbounds) - 1);
+        gmap.setZoom(this.zoom);
 
         if (this.maptype == "terrain") {
             gmap.addMapType(G_PHYSICAL_MAP);
