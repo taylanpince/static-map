@@ -59,6 +59,9 @@ StaticMap class takes a selector and a dictionary of options:
 
     - media_url: A string that will be apended to media file paths
 
+    - maptype: A string describing the type of map. "roadmap" and "terrain"
+               currently work, nothing else has been tested.
+
 After creating the container for the map, instantiate the class with options:
 
     <div id="MapArea"></div>
@@ -71,6 +74,7 @@ After creating the container for the map, instantiate the class with options:
             "size" : [298, 298], 
             "center" : [41.9288, -87.6315], 
             "zoom" : 10,
+            "maptype" : "roadmap",
             "markers" : [
                 {
                     "coordinates" : [41.9228, -87.6632],
