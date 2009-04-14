@@ -12,7 +12,7 @@ $.namespace("core.StaticMap");
 
 core.StaticMap = $.Class.extend({
     
-    url_template : "http://maps.google.com/staticmap?key=%(api_key)&amp;center=%(center)&amp;markers=%(markers)&amp;size=%(size)&amp;format=png8",
+    url_template : "http://maps.google.com/staticmap?key=%(api_key)&amp;center=%(center)&amp;markers=%(markers)&amp;size=%(size)&amp;format=png8&amp;maptype=%(maptype)",
     api_template : "http://www.google.com/jsapi?key=%(api_key)",
     marker_template : "%(media_path)static_map/images/markers/%(number).png",
     image_template : '<a href="javascript:void(0);" title="%(launch_copy)"><img src="%(map_url)" alt="Static Map" /><span class="map-link">%(launch_copy)</span></a>',
@@ -25,6 +25,7 @@ core.StaticMap = $.Class.extend({
     size : [300, 300],
     center : [0, 0],
     zoom : 14,
+    maptype : "roadmap",
     markers : [],
     media_path : "",
     
@@ -51,13 +52,11 @@ core.StaticMap = $.Class.extend({
         
         var markers = "";
         
-        if (this.markers.length > 0) {
-            for (var m in this.markers) {
-                markers += this.markers[m].coordinates;
-            
-                if (this.markers.length > 1 || center != this.markers[m].coordinates) {
-                    markers += ",red" + (parseInt(m) + 1) + "|";
-                }
+        for (var m=0; m < this.markers.length; m++) {
+            markers += this.markers[m].coordinates;
+
+            if (this.markers.length > 1 || center != this.markers[m].coordinates) {
+                markers += ",red" + (parseInt(m) + 1) + "|";
             }
         }
         
@@ -65,7 +64,8 @@ core.StaticMap = $.Class.extend({
             "api_key" : this.api_key,
             "size" : this.size[0] + "x" + this.size[1],
             "center" : center,
-            "markers" : this.clean_variable(markers, "|")
+            "markers" : this.clean_variable(markers, "|"),
+            "maptype" : this.maptype
         });
         
         url += "&amp;zoom=" + this.zoom;
@@ -112,6 +112,12 @@ core.StaticMap = $.Class.extend({
         }
         
         gmap.setZoom(gmap.getBoundsZoomLevel(gbounds) - 1);
+
+        if (this.maptype == "terrain") {
+            gmap.addMapType(G_PHYSICAL_MAP);
+            gmap.setMapType(G_PHYSICAL_MAP);
+        }
+
     },
     
     load_interactive_map : function() {
