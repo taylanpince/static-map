@@ -1,3 +1,22 @@
+RELEASE 1.1.0ALPHA
+==================
+
+Tagged release-1.1.0ALPHA on April 14, 2009 by Taylan Pince
+
+
+New Features
+------------
+
+* Added support for terrain map type (Matt Wilson)
+* Made map zoom level same as the static image (Matt Wilson)
+
+Bug Fixes
+---------
+
+* Fixed a problem with iterating over markers (Matt Wilson)
+
+* * *
+
 RELEASE 1.0.0BETA
 =================
 
