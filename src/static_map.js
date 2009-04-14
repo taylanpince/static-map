@@ -52,13 +52,11 @@ core.StaticMap = $.Class.extend({
         
         var markers = "";
         
-        if (this.markers.length > 0) {
-            for (var m in this.markers) {
-                markers += this.markers[m].coordinates;
-            
-                if (this.markers.length > 1 || center != this.markers[m].coordinates) {
-                    markers += ",red" + (parseInt(m) + 1) + "|";
-                }
+        for (var m=0; m < this.markers.length; m++) {
+            markers += this.markers[m].coordinates;
+
+            if (this.markers.length > 1 || center != this.markers[m].coordinates) {
+                markers += ",red" + (parseInt(m) + 1) + "|";
             }
         }
         
